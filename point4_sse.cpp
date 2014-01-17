@@ -55,7 +55,7 @@ int main() {
 		p.w = sqrtf(p.w);
 	}
 	stop = clock();
-	cout << "time cost with SIMD = " << (stop - start) / (float)CLOCKS_PER_SEC * 1000.0 << "ms" << endl;
+	cout << "time cost without SIMD = " << (stop - start) / (float)CLOCKS_PER_SEC * 1000.0 << "ms" << endl;
 	// verify
 	flag = false;
 	for (int i = 0; i < n; i++) {	
@@ -68,13 +68,5 @@ int main() {
 	if (flag) cout << "Failed." << endl;
 	else cout << "Succeeded." << endl;
 
-	Point4f zero;
-	cout << zero << endl;
-	zero = zero + Point4f(1, 2, 3, 4);
-	cout << zero << endl;
-	zero = zero * zero;
-	cout << zero << endl;
-	zero = zero / zero;
-	cout << zero << endl;
 	return 0;
 }
