@@ -12,12 +12,12 @@ using namespace std;
 int main() {
 	float vref = sqrtf(7.0f);
 	__m128 m1 = _mm_set_ps1(7.0);
+	Point4f_Naive p1(7.0);
 	__m128 mref = _mm_set_ps1(vref);
 	float res_val[4] = { 0 };
 
 	int runs = 1;
 	int n = 32 * 1024 * 1024;
-	//vector<Point4f, aligned_allocator<Point4f, 16>> vec(n, m1);
 	vector<Point4f> vec(n, m1);
 
 	clock_t start, stop;
@@ -34,7 +34,6 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		Point4f res = (vec[i] != mref);
 		if (res[0] || res[1] || res[2] || res[3]) {
-			cout << vec[i] << '\t' << mref << endl;
 			flag = true;
 			break;
 		}
@@ -48,11 +47,7 @@ int main() {
 	start = clock();
 	for (int j = 0; j < runs; j++)
 	for (int i = 0; i < n; i++) {
-		Point4f_Naive& p = vec2[i];
-		p.x = sqrtf(p.x);
-		p.y = sqrtf(p.y);
-		p.z = sqrtf(p.z);
-		p.w = sqrtf(p.w);
+		vec2[i] = vec2[i].sqrt();
 	}
 	stop = clock();
 	cout << "time cost without SIMD = " << (stop - start) / (float)CLOCKS_PER_SEC * 1000.0 << "ms" << endl;
